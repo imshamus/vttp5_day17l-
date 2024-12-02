@@ -7,4 +7,5 @@ public class Constant {
     // creates a key for StudentService.java so that StudentRestController can use
     // or is it only in StudentRestController?
     public static final String studentKey = "students"; 
+    // public static final String carparkKey = "carparks";
 }

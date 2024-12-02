@@ -4,9 +4,9 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import jakarta.json.Json;
@@ -15,18 +15,27 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import sg.edu.nus.iss.day17l.constant.Url;
 import sg.edu.nus.iss.day17l.model.Carpark;
-import sg.edu.nus.iss.day17l.repository.ListRepo;
 
 @Service
 public class CarparkService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarparkService.class);
 
     RestTemplate restTemplate = new RestTemplate();
 
     public List<Carpark> getCarparks()
     {
+        logger.info("Getting info from filtered data..");
         String carparkData = restTemplate.getForObject(Url.carparkUrl2, String.class);
 
         // System.out.println(carparkData);
+
+        if (carparkData == null) {
+            logger.error("failed to fetch carpark data, response was null");
+            return new ArrayList<>();   
+           }
+
+        logger.debug("Raw carpark data: {}", carparkData);
 
         // Parse the string response as a JSON Array
         JsonReader jReader = Json.createReader(new StringReader(carparkData));
@@ -51,6 +60,9 @@ public class CarparkService {
 
             carparks.add(c);
         }
+
+        logger.info("Succesfully parsed {} carparks.", carparks.size());
+        logger.debug("First 5 carparks: {}.", carparks.stream().limit(5).toList());
 
         return carparks;
     }

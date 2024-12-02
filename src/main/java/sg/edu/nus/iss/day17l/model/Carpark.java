@@ -1,13 +1,29 @@
 package sg.edu.nus.iss.day17l.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
 public class Carpark {
 
+    @PositiveOrZero(message = "Please enter a positive ID.")
     private Integer id;
+
+    @NotBlank(message = "Address cannot be blank.") // cannot be null, blank or just white spaces
     private String address;
+
+    @NotBlank(message = "Category cannot be blank.")
     private String category;
+
+    @NotBlank(message = "Weekday rate 1 cannot be blank.")
     private String wdRate1;
+
+    @NotBlank(message = "Weekday rate 2 cannot be blank.")
     private String wdRate2;
+
+    @NotBlank(message = "Saturday rate cannot be blank.")
     private String satRate;
+
+    @NotBlank(message = "Sunday public holiday rate cannot be blank.")
     private String sundayPhRate;
     
     public Carpark() {
@@ -82,8 +98,7 @@ public class Carpark {
 
     @Override
     public String toString() {
-        return id + "," + address + "," + category + "," + wdRate1
-                + "," + wdRate2 + "," + satRate + "," + sundayPhRate;
+        return id + "," + address + "," + category + "," + wdRate1 + "," + wdRate2 + "," + satRate + "," + sundayPhRate;
     }
     
     
