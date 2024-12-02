@@ -42,7 +42,7 @@ public class CarparkRestService {
          return new ArrayList<>();   
         }
 
-        logger.debug("Raw carpark data: {}", carparkData);
+        // logger.debug("Raw carpark data: {}", carparkData);
 
         // System.out.println(carparkData); // make the request mapped by controller in browser to see in terminal, this is a string object
 
