@@ -17,6 +17,13 @@ public class ListRepo {
     @Qualifier(Constant.template01)
     RedisTemplate<String, String> template;
 
+    // Count para
+    // Positive: Removes the first count occurrences of the value.
+    // Negative: Removes the last count occurrences.
+    // Zero: Removes all occurrences.
+
+
+    // Adding to List (Single)
     // D15 - slide 30, slide 34
     public void leftPush(String key, String value) {
         template.opsForList().leftPush(key, value);
@@ -26,10 +33,42 @@ public class ListRepo {
         template.opsForList().rightPush(key, value);
     }
 
+    // Adding to List (Multiple)
+    public void rightPushAll(String key, String... values) {
+        template.opsForList().rightPushAll(key, values);
+    }
+    
+
+
+    // Removes from List (RPOP)
     // D15 - slide 30
     public void leftPop(String key) {
         template.opsForList().leftPop(key, 1);
     }
+
+    public void rightPop(String key) {
+        template.opsForList().rightPop(key, 1);
+    }
+
+    // Retrieves and removes the last element of the list.
+    // public String rightPop(String key) {
+    //     return template.opsForList().rightPop(key);
+    // }
+    
+    // Remove an Element from a List - removes the first occurance of a specific value froma  list (LREM)
+    public void remove(String key, long count, String value) {
+        template.opsForList().remove(key, count, value);
+    }
+    
+
+
+    // Trim a List - Trims the list to only include elements within a specified range. (LTRIM)
+    // Keeps only the elements between start and end.
+    public void trim(String key, long start, long end) {
+        template.opsForList().trim(key, start, end);
+    }
+    
+
 
     // D15 - slide 32
     public String get(String key, Integer index) {
@@ -41,44 +80,11 @@ public class ListRepo {
         return template.opsForList().size(key);
     }
 
+    // Get the whole list
     public List<String> getList(String key) {
         List<String> list = template.opsForList().range(key, 0, -1);
 
         return list;
     }
 
-
-    // // public Boolean deleteItem(String key, Person valueToDelete) {
-    //     Boolean isDeleted = false;
-
-    //     List<String> retrievedList = template.opsForList().range(key, 0, -1);
-
-    //     String [] splitData = valueToDelete.toString().split(",");
-
-    //     Optional<String> tempString = retrievedList.stream().filter(p -> p.toString().contains(splitData[2])).findFirst();
-
-    //     int iFound = -1;
-    //     if (tempString.isPresent()) {
-    //         for(int i = 0;  i < retrievedList.size(); i++) {
-    //             if (retrievedList.get(i).contains(splitData[2])) {
-    //                 iFound = i;
-    //                 break;
-    //             }
-    //         }
-    //     }
-
-    //     String data = template.opsForList().index(Util.keyPerson, iFound);
-
-    //     System.out.println("valueToDelete: " + valueToDelete.toString());
-    //     System.out.println("tempString: " + tempString);
-    //     System.out.println("tempString: " + tempString.toString());
-
-
-    //     if (iFound >= 0) {
-    //         template.opsForList().remove(key, 1, data);
-    //         isDeleted = true;
-    //     }
-
-    //     return isDeleted;
-    // }
 }

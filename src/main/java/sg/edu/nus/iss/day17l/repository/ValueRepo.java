@@ -1,5 +1,7 @@
 package sg.edu.nus.iss.day17l.repository;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -55,4 +57,31 @@ public class ValueRepo {
     public Boolean checkExists(String key) {
         return template.hasKey(key);
     }
+
+
+    // Append to a value - Appends a value to an existing value stored at a key. (APPEND)
+    public void append(String key, String value) {
+        template.opsForValue().append(key, value);
+    }
+
+    
+    // Get a substring of a value - Retrieves a substring of the string stored at a key. (GETRANGE)
+    public String getSubstring(String key, long start, long end) {
+        return template.opsForValue().get(key, start, end);
+    }
+
+
+    // Set a Value Only If It Doesn’t Exist - Ensures that the value is only set if the key does not already exist.  (SETNX)
+    public Boolean setIfAbsent(String key, String value) {
+        return template.opsForValue().setIfAbsent(key, value);
+    }
+
+
+    // Expire a Key - Sets a time-to-live (TTL) for a key. (EXPIRE)
+    public Boolean setExpiration(String key, long timeout, TimeUnit unit) {
+        return template.expire(key, timeout, unit);
+    }
+
+    
+    
 }

@@ -15,12 +15,21 @@ import sg.edu.nus.iss.day17l.constant.*;;
 public class RedisConfig {
         // D15 - slide 17
 
-    @Value("${spring.data.redis.host}")
+    //@Value is a Spring annotation used to inject values into variables. It can read values from:
+    // application.properties or application.yml: Most common usage.
+    // System Environment Variables: If defined.
+    // Default Values: If a property is missing, you can specify a default.
+
+    @Value("${spring.data.redis.host}") 
     private String redisHost;
 
     @Value("${spring.data.redis.port}")
     private Integer redisPort;
 
+    // Default example
+    // @Value("${redis.username:default_user}")
+    // private String redisUsername;
+    // If redis.username isn’t defined in application.properties, the value defaults to "default_user".
     @Value("${spring.data.redis.username}")
     private String redisUsername;
 
@@ -29,13 +38,16 @@ public class RedisConfig {
 
 
     // D15 - slide 18
-
+    // Creates a configuration for connecting to a standalone Redis server
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
+
+        // redisstandalone defines basic connections settings for a single redis server
         RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration();
-        rsc.setHostName(redisHost);
+        rsc.setHostName(redisHost); 
         rsc.setPort(redisPort);
 
+        // if username is blank or only white spaces, redis connects without authentication
         if(redisUsername.trim().length() > 0) {
             rsc.setUsername(redisUsername);
             rsc.setPassword(redisPassword);
@@ -48,6 +60,7 @@ public class RedisConfig {
         return jcf;
     }
 
+    // Defines a RedisTemplate bean for interacting with Redis
     @Bean(Constant.template01)
     public RedisTemplate<String, String> redisObjectTemplate01() {
         RedisTemplate<String, String> template = new RedisTemplate<>();
