@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Repository;
 
 import sg.edu.nus.iss.day17l.constant.Constant;
 
+@Repository
 public class JokeRepo 
 {
     // Injects the RedisTemplate bean defined in RedisConfig
@@ -22,9 +24,9 @@ public class JokeRepo
     }
 
     // Saves a joke to redis
-    public void saveJoke(String joke)
+    public void saveJoke(String key, String joke)
     {
-        template.opsForList().rightPush(Constant.jokeKey, joke);
+        template.opsForList().rightPush(key, joke);
     }
 
     // Delete a joke from redis
