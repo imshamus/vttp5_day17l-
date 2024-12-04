@@ -16,14 +16,6 @@ public class JokeService {
     @Autowired 
     private JokeRepo jokeRepo;
 
-    public void addJoke(Joke joke)
-    {
-        // String jokeString = joke.getId() + "," + joke.getType() + "," + joke.getSetup() + "," + joke.getPunchline();
-
-        String jokeString = joke.toString();
-        jokeRepo.saveJoke(Constant.jokeKey, jokeString);
-    }
-
     public List<Joke> getAllJokes()
     {
         List<String> jokesInRedis = jokeRepo.findAllJokes(); // load all jokes from redis, each joke as a string
@@ -36,7 +28,7 @@ public class JokeService {
 
             String[] parts = jokeString.split(",");
             
-            // or can create joke here and parse in the variables straight Joke joke = new joke(id, type, setup, punchline);
+            // or can create joke here and parse in the variables straight Joke joke = new joke(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3]);
 
             joke.setId(Integer.parseInt(parts[0]));
             joke.setType(parts[1]);
@@ -48,6 +40,20 @@ public class JokeService {
 
         return jokes;
 
+    }
+
+    public void addJoke(Joke joke)
+    {
+        // String jokeString = joke.getId() + "," + joke.getType() + "," + joke.getSetup() + "," + joke.getPunchline();
+
+        String jokeString = joke.toString();
+        jokeRepo.saveJoke(Constant.jokeKey, jokeString);
+    }
+
+    public void deleteJoke(Joke joke)
+    {
+        String jokeString = joke.toString();
+        jokeRepo.deleteJoke(Constant.jokeKey, jokeString);
     }
 
     public boolean isIdUnique(Integer id) {

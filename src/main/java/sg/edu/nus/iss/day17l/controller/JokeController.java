@@ -44,25 +44,33 @@ public class JokeController {
     @PostMapping("/create")
     public String createJoke(@Valid @ModelAttribute("joke") Joke joke, BindingResult bindingResult, Model model) // @ModelAtttribute binds data from http request (like a form submission) to a java object. Typically used in methods that handle form submission
     {
+        // Check for conversion errors early
+        // Handle conversion errors by checking the BindingResult for such errors before proceeding with validation logic
+        if (bindingResult.hasFieldErrors("id")) 
+        {
+            FieldError err = new FieldError("joke", "id", "ID must be a numeric value.");
+            bindingResult.addError(err);
 
+            return "jokecreate";
+        }
+
+        // Validation logic
         if (bindingResult.hasErrors())
         {
             return "jokecreate";
         }
         
+        // Custom validation + Debug
         System.out.println("Is ID Unique? " + jokeService.isIdUnique(joke.getId()));
-
+        
         if (!jokeService.isIdUnique(joke.getId())) {
             FieldError err = new FieldError("joke", "id", "ID already exists.");
             bindingResult.addError(err);
             return "jokecreate";
-        }
-        
+        }        
 
         jokeService.addJoke(joke);
         return "redirect:/jokes";
     }
-    
-    
     
 }

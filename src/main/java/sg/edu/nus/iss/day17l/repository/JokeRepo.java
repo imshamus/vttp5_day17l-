@@ -30,6 +30,10 @@ public class JokeRepo
     }
 
     // Delete a joke from redis
+    public void deleteJoke(String key, String joke)
+    {
+        template.opsForList().remove(key, 1, joke);
+    }
 
 
     

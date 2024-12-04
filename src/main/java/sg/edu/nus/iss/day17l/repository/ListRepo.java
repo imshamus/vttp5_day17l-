@@ -18,9 +18,9 @@ public class ListRepo {
     RedisTemplate<String, String> template;
 
     // Count para
-    // Positive: Removes the first count occurrences of the value.
-    // Negative: Removes the last count occurrences.
-    // Zero: Removes all occurrences.
+    // Positive number (n): Remove up to n occurrences starting from the head (beginning) of the list.
+    // Negative number (-n): Remove up to n occurrences starting from the tail (end) of the list.
+    // Zero (0): Remove all occurrences of the value from the list.
 
 
     // Adding to List (Single)
@@ -54,10 +54,22 @@ public class ListRepo {
     // public String rightPop(String key) {
     //     return template.opsForList().rightPop(key);
     // }
+
+
+
+    // .remove method 
+    // Removes a specific occurence of an element from a Redis List
+    // You specify list key, the number of occurences to remove, & value of the lement to remove
+    // Redis searches the list and removes matching elements
     
-    // Remove an Element from a List - removes the first occurance of a specific value froma  list (LREM)
+    // Remove an Element from a List - removes the first occurance of a specific value from a list (LREM)
     public void remove(String key, long count, String value) {
         template.opsForList().remove(key, count, value);
+    }
+
+    
+    public void removeone(String key, String valueString) {
+        template.opsForList().remove(key, 1, valueString); // Removes one occurrence of the value
     }
     
 
