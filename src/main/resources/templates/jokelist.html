@@ -13,6 +13,16 @@
         <br>
         <h3>Joke List</h3>
         <br>
+        
+        <!-- Success Message -->
+        <div th:if="${success}" class="alert alert-success">
+            <p th:text="${success}"></p>
+        </div>
+
+        <!-- Error Message -->
+        <div th:if="${error}" class="alert alert-danger">
+            <p th:text="${error}"></p>
+        </div>
 
         <table class="table table-striped">
             <thead>
@@ -21,6 +31,7 @@
                     <th>Type</th>
                     <th>Setup</th>
                     <th>Punchline</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,11 +40,17 @@
                     <td th:text="${joke.type}"></td>
                     <td th:text="${joke.setup}"></td>
                     <td th:text="${joke.punchline}"></td>
+                    <td>
+                        <form method="post" th:action="@{/jokes/delete}">
+                            <input type="hidden" name="id" th:value="${joke.id}" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
+          
         <a th:href="@{/jokes/create}">Create New Joke</a>
-        
 
     </div>
 
