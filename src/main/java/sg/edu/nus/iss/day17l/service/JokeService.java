@@ -50,4 +50,13 @@ public class JokeService {
 
     }
 
+    public boolean isIdUnique(Integer id) {
+        // Load all jokes from Redis
+        List<Joke> jokes = getAllJokes();
+    
+        // Check if any joke has the same ID
+        return jokes.stream().noneMatch(joke -> joke.getId().equals(id));
+    }
+    
+
 }

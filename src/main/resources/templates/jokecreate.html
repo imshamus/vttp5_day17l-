@@ -16,19 +16,39 @@
 
         <form method="POST" th:action="@{/jokes/create}" th:object="${joke}">
 
-          <label>Type:</label>
-          <input type="text" th:field="*{type}" />
+          <div class="mb-3">
+            <label class="form-labal">ID:</label>
+            <input type="text" class="form-control" name="id" th:field="*{id}"  placeholder="id" />
+            <!--<p class = "alert alert-danger" data-th-if="${#fields.hasErrors('type')}" data-th-errors = "*{type}">-->
+            <p class = "text-danger" data-th-if="${#fields.hasErrors('id')}" data-th-errors = "*{id}">
+            </p>
+          </div>
 
-          <label>Setup:</label>
-          <input type="text" th:field="*{setup}" />
+          <div class="mb-3">
+            <label class="form-labal">Type:</label>
+            <input type="text" class="form-control" name="type" th:field="*{type}"  placeholder="type" />
+            <!--<p class = "alert alert-danger" data-th-if="${#fields.hasErrors('type')}" data-th-errors = "*{type}">-->
+            <p class = "text-danger" data-th-if="${#fields.hasErrors('type')}" data-th-errors = "*{type}">
+            </p>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-labal">Setup:</label>
+            <input type="text" class="form-control" name="setup" th:field="*{setup}"  placeholder="setup" />
+            <!--<p class = "alert alert-danger" data-th-if="${#fields.hasErrors('type')}" data-th-errors = "*{type}">-->
+            <p class = "text-danger" data-th-if="${#fields.hasErrors('setup')}" data-th-errors = "*{setup}">
+            </p>
+          </div>
 
-          <label>Punchline:</label>
-          <input type="text" th:field="*{punchline}" />
+          <div class="mb-3">
+            <label class="form-labal">Punchline:</label>
+            <input type="text" class="form-control" name="punchline" th:field="*{punchline}"  placeholder="punchline" />
+            <!--<p class = "alert alert-danger" data-th-if="${#fields.hasErrors('type')}" data-th-errors = "*{type}">-->
+            <p class = "text-danger" data-th-if="${#fields.hasErrors('punchline')}" data-th-errors = "*{punchline}">
+            </p>
+          </div>
 
-          <label>ID:</label>
-          <input type="number" th:field="*{id}" />
-
-          <button type="submit">Add Joke</button>
+          <button type="submit" class="btn btn-primary">Add Joke</button>
       </form>
 
     </div>

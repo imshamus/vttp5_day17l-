@@ -1,21 +1,26 @@
 package sg.edu.nus.iss.day17l.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class Joke {
 
-    @NotBlank(message = "Type cannot be blank")
+    @Positive(message = "ID must be a postive number.")
+    // @NotBlank(message = "ID cannot be blank.") // This does not work as notblank is for strings
+    @NotNull(message = "ID must not be null.")
+    private Integer id;
+
+    @NotBlank(message = "Type cannot be blank.")
     private String type;
 
-    @NotBlank(message = "Setup cannot be blank")
+    @NotBlank(message = "Setup cannot be blank.")
     private String setup;
 
-    @NotBlank(message = "Punchline cannot be blank")
+    @NotBlank(message = "Punchline cannot be blank.")
     private String punchline;
 
-    @Positive(message = "ID must be a postive number")
-    private Integer id;
+    
 
     // Constructors
     public Joke() {
@@ -62,7 +67,7 @@ public class Joke {
 
     @Override
     public String toString() {
-        return type + "," + setup + "," + punchline + "," + id;
+        return id + "," + type + "," + setup + "," + punchline + ",";
     }
     
 }
